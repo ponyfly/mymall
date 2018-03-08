@@ -61,7 +61,6 @@ App({
     }
     wx.login({
       success: function(res) {
-        console.log(res)
         wx.request({
           url: `https://api.it120.cc/${that.globalData.subDomain}/user/wxapp/login`,//小程序登录，获取到 token 后可保存到本地存储，以后用该 token 进行相关用户授权接口的调用
           data: {

@@ -1,0 +1,7 @@
+.swiper-container { width:750rpx;height:562.5rpx;overflow: hidden}
+.swiper-container .swiper_box{ width:100%; height:100%;}
+.swiper-container .swiper_box swiper-item image{width:750rpx;height:562.5rpx;}
+.type-container { width:100%; height:88rpx; color: #000;}
+.type-container .type-navbar{height:100%;white-space: nowrap}
+.type-container .type-navbar .type-navbar-item{display: inline-block; width:160rpx; height:88rpx;line-height: 88rpx;text-align:center;overflow:hidden;border-bottom: 4px solid #fff;box-sizing: border-box}
+.type-container .type-navbar .type-navbar-on { border-bottom: 4px solid #f66}
