@@ -1,6 +1,6 @@
 <view class="container">
   <view class="swiper-container">
-    <swiper class="swiper_box" indicator-dots="{{indicatorDots}}" circular="{{circular}}" autoplay="{{autoplay}}">
+    <swiper class="swiper_box" indicator-dots="true" circular="true" autoplay="true">
       <block wx:for="{{banners}}" wx:key="id">
         <swiper-item>
           <image src="{{item.picUrl}}"></image>
@@ -14,5 +14,34 @@
         <view id="{{item.id}}" class="type-navbar-item {{activeCategoryId == item.id ? 'type-navbar-on' : ''}}" bindtap="tabClick">{{item.name}}</view>
       </block>
     </scroll-view>
+  </view>
+  <view class="notice-container" wx:if="notices">
+    <view class="notice-title">公告</view>
+    <swiper class="notice-swiper-container" autoplay="true" circular="true" vertical="true">
+      <block wx:for="{{notices.dataList}}" wx:key="id">
+        <swiper-item>{{item.title}}</swiper-item>
+      </block>
+    </swiper>
+  </view>
+  <view class="coupons" wx:if="coupons">
+    <scroll-view class="coupons-scroll" scroll-x>
+      <block wx:for="{{coupons}}" wx:key="id">
+        <view class="coupon-item">
+          <view style="font-size: 35rpx"> ￥ {{item.moneyMax}}元</view>
+          <view>{{item.name}}</view>
+          <view>满{{item.moneyHreshold}}元使用</view>
+          <view>领取{{item.dateEndDays}}天内有效</view>
+        </view>
+      </block>
+    </scroll-view>
+  </view>
+  <view class="goods-container">
+    <block wx:for="{{goods}}" wx:key="{{id}}">
+      <view class="good-item">
+        <image src="{{item.pic}}_m" mode="aspectFill"  lazy-load="true"></image>
+        <view class="good-item-title">{{item.name}}</view>
+        <view class="good-item-price"> ￥ {{item.minPrice}}元</view>
+      </view>
+    </block>
   </view>
 </view>

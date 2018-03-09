@@ -6,12 +6,13 @@ Page({
    * 页面的初始数据
    */
   data: {
-    indicatorDots: true,
-    circular: true,
-    autoplay: true,
     banners: [],
     categories: [],
-    activeCategoryId: 0
+    activeCategoryId: 0,
+    notices: null,
+    loadingMoreHidden: true,
+    goods: [],
+    searchInput: ''
   },
 
   /**
@@ -21,6 +22,9 @@ Page({
     this.setTitle()
     this.getBanners()
     this.getCategories()
+    this.getNotices()
+    this.getCoupons()
+    this.getGoods(0)
   },
 
   /**
@@ -104,6 +108,52 @@ Page({
     this.setData({
       activeCategoryId: e.currentTarget.id
     })
+  },
+  getNotices: function () {
+    wx.request({
+      url:`https://api.it120.cc/${app.globalData.subDomain}/notice/list`,
+      data: {pageSize: 5},
+      success:res=>{
+        if(res.data.code === 0) {
+          this.setData({
+            notices: res.data.data
+          })
+        }
+      }
+    })
+  },
+  getCoupons: function () {
+    wx.request({
+      url:`https://api.it120.cc/${app.globalData.subDomain}/discounts/coupons`,
+      success:res=>{
+        if(res.data.code === 0) {
+          this.setData({
+            coupons: res.data.data
+          })
+        }
+      }
+    })
+  },
+  getGoods: function (categoryId) {
+    if (categoryId === 0) categoryId = ''
+    wx.request({
+      url:`https://api.it120.cc/${app.globalData.subDomain}/shop/goods/list`,
+      data: {categoryId, nameLike : this.data.searchInput},
+      success:res=>{
+        this.setData({
+          goods: [],
+          loadingMoreHidden: true
+        })
+        if (res.data.code !==0 || res.data.data.length === 0) {
+          this.setData({
+            loadingMoreHidden: false
+          })
+          return
+        }
+        this.setData({
+          goods: res.data.data
+        })
+      }
+    })
   }
-
 })
