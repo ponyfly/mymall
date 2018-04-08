@@ -1,7 +1,7 @@
 <view class="container">
   <view class="swiper-container">
     <swiper class="swiper_box" indicator-dots="true" circular="true" autoplay="true">
-      <block wx:for="{{banners}}" wx:key="id">
+      <block wx:for="{{banners}}" wx:key="{{id}}">
         <swiper-item>
           <image src="{{item.picUrl}}"></image>
         </swiper-item>
@@ -10,22 +10,29 @@
   </view>
   <view class="type-container">
     <scroll-view class="type-navbar" scroll-x>
-      <block wx:for="{{categories}}" wx:key="id">
+      <block wx:for="{{categories}}" wx:key="{{id}}">
         <view id="{{item.id}}" class="type-navbar-item {{activeCategoryId == item.id ? 'type-navbar-on' : ''}}" bindtap="tabClick">{{item.name}}</view>
       </block>
     </scroll-view>
   </view>
-  <view class="notice-container" wx:if="notices">
+  <view class="search-view" style="background:{{ scrollTop === 0 ?'-webkit-linear-gradient(top, rgba(105,195,170, 1), rgba(105,195,170, 0.3))' :( scrollTop<200 ? 'rgba(105,195,170,'+(scrollTop/400+0.3) +')' : 'rgba(105,195,170,1)')  }} ">
+    <view class="serarch-content">
+      <image class="search-icon" src="/images/search-pic.png"/>
+      <input placeholder="请输入搜索内容" class="search-input" maxlength="30" confirm-type="搜索" bindinput='listenerSearchInput' bindconfirm='toSearch'/>
+      <button class='search-button' bindtap="toSearch">搜索</button>
+    </view>
+  </view>
+  <view class="notice-container" wx:if="{{notices}}">
     <view class="notice-title">公告</view>
     <swiper class="notice-swiper-container" autoplay="true" circular="true" vertical="true">
-      <block wx:for="{{notices.dataList}}" wx:key="id">
+      <block wx:for="{{notices.dataList}}" wx:key="{{id}}">
         <swiper-item>{{item.title}}</swiper-item>
       </block>
     </swiper>
   </view>
-  <view class="coupons" wx:if="coupons">
+  <view class="coupons" wx:if="{{coupons}}">
     <scroll-view class="coupons-scroll" scroll-x>
-      <block wx:for="{{coupons}}" wx:key="id">
+      <block wx:for="{{coupons}}" wx:key="{{id}}">
         <view class="coupon-item">
           <view style="font-size: 35rpx"> ￥ {{item.moneyMax}}元</view>
           <view>{{item.name}}</view>
@@ -41,7 +48,9 @@
         <image src="{{item.pic}}_m" mode="aspectFill"  lazy-load="true"></image>
         <view class="good-item-title">{{item.name}}</view>
         <view class="good-item-price"> ￥ {{item.minPrice}}元</view>
+        <view wx:if="{{item.originalPrice && item.originalPrice > 0}}" style='color:#aaa;text-decoration:line-through'> ￥ {{item.originalPrice}}</view>
       </view>
     </block>
   </view>
+  <view hidden="{{loadingMoreHidden}}" class="no-more-goods">没有更多啦</view>
 </view>

@@ -12,7 +12,8 @@ Page({
     notices: null,
     loadingMoreHidden: true,
     goods: [],
-    searchInput: ''
+    searchInput: '',
+    scrollTop: 0
   },
 
   /**
@@ -154,6 +155,11 @@ Page({
           goods: res.data.data
         })
       }
+    })
+  },
+  onPageScroll: function (e) {
+    this.setData({
+      scrollTop: e.scrollTop
     })
   }
 })
